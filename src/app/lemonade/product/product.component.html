@@ -1,0 +1,6 @@
+<div class="styled-product">
+  <h2 class="product-name">{{ name }}</h2>
+  <button (click)="handleDecrement()" class="decrement-button">-</button>
+  <h3>{{ amount | convertMeasurement : unit }}</h3>
+  <button (click)="handleIncrement()" class="increment-button">+</button>
+</div>

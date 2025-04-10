@@ -1,0 +1,51 @@
+<div class="container">
+  <div>
+    <h1>
+      Hi there, before you can customize lemonades for your order we need some
+      information about you.
+    </h1>
+    <form class="form-box" [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+      <app-input label="Name" [control]="$any(customerForm.controls['name'])" />
+      <app-input
+        label="Phone Number"
+        [control]="$any(customerForm.controls['phoneNumber'])"
+      />
+      <label for="lemonadeStand"
+        >Which lemonade stand would you like to order from?</label
+      >
+      <select
+        name="lemonadeStand"
+        class="input-style"
+        formControlName="selectedStand"
+      >
+        <option [ngValue]="undefined">Select a lemonade stand</option>
+        <option
+          *ngFor="let lemonadeStand of lemonadeStands"
+          [ngValue]="lemonadeStand"
+        >
+          {{ lemonadeStand.name }}
+        </option>
+      </select>
+      <ng-container
+        *ngIf="
+          customerForm.controls['selectedStand'].touched &&
+          customerForm.controls['selectedStand'].errors
+        "
+      >
+        <div
+          class="error"
+          *ngIf="customerForm.controls['selectedStand'].errors['required']"
+        >
+          Lemonade stand is required.
+        </div>
+      </ng-container>
+      <button
+        class="yellow-button"
+        [disabled]="customerForm.invalid"
+        [ngClass]="customerForm.invalid ? 'disabled' : ''"
+      >
+        Start your order
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div
+  class="fill"
+  [style]="{
+    transform:
+      'translate(0, ' +
+      (percentLemonJuiceLiquid < 100 ? percentLemonJuiceLiquid : 105) +
+      '%)'
+  }"
+>
+  <app-wave class="wave back"></app-wave>
+  <app-wave class="wave front"></app-wave>
+</div>
+<div
+  class="fill-water"
+  [style]="{
+    transform:
+      'translate(0, ' +
+      (percentWaterLiquid < 100 ? percentWaterLiquid : 105) +
+      '%)'
+  }"
+>
+  <app-wave class="wave back-water"></app-wave>
+  <app-wave class="wave front-water"></app-wave>
+</div>
+<div
+  class="fillSugar"
+  [style]="{ transform: 'translate(0, ' + percentSugarLiquid + '%)' }"
+></div>
+<div class="iceBox">
+  <img
+    class="iceCube"
+    *ngFor="let iceCube of [].constructor(iceCubesLiquid)"
+    src="ice.svg"
+  />
+</div>

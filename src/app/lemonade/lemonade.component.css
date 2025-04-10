@@ -1,0 +1,32 @@
+.lemonade {
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.backdrop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100dvh;
+  width: 40dvw;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-cart {
+  width: 78%;
+  height: 50px;
+  border: 1px solid black;
+  background-color: #f96e46;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 20px;
+  margin: 0 auto;
+}
+
+.add-cart:hover {
+  cursor: pointer;
+}
