@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../cart.service';
+import LemonadeStand from '../interfaces/LemonadeStand';
 
 @Component({
   selector: 'app-checkout',
@@ -12,11 +13,39 @@ import { CartService } from '../cart.service';
 export class CheckoutComponent implements OnInit {
   totalPrice: number = 0;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) {}
+
+  customerName: string = '';
+
+  customerPhoneNumber: string = '';
+
+  selectedStand: LemonadeStand | undefined = undefined;
 
   ngOnInit() {
+    this.cartService.customerName.subscribe(
+      (currentCustomerName) => (this.customerName = currentCustomerName)
+    );
+
+    this.cartService.customerPhoneNumber.subscribe(
+      (currentCustomerPhoneNumber) =>
+        (this.customerPhoneNumber = currentCustomerPhoneNumber)
+    );
+
+    this.cartService.selectedStand.subscribe(
+      (selectedStand) => (this.selectedStand = selectedStand)
+    );
+
     this.cartService.currentTotalPrice.subscribe(
       (currentTotalPrice) => (this.totalPrice = currentTotalPrice)
     );
+
+    if (
+      !this.customerName ||
+      !this.customerPhoneNumber ||
+      !this.selectedStand ||
+      this.totalPrice === 0
+    ) {
+      this.router.navigateByUrl('/');
+    }
   }
 }

@@ -1,29 +1,38 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
-interface LemonadeStand {
-  id: number;
-  name: string;
-}
+import LemonadeStand from './interfaces/LemonadeStand';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private standSource = new BehaviorSubject<LemonadeStand>({
-    id: -1,
-    name: '',
-  });
-  currentStand = this.standSource.asObservable();
+  private customerNameSource = new BehaviorSubject<string>('');
+  customerName = this.customerNameSource.asObservable();
+
+  private customerPhoneNumberSource = new BehaviorSubject<string>('');
+  customerPhoneNumber = this.customerPhoneNumberSource.asObservable();
+
+  private selectedStandSource = new BehaviorSubject<LemonadeStand | undefined>(
+    undefined
+  );
+  selectedStand = this.selectedStandSource.asObservable();
 
   private standOptionsSource = new BehaviorSubject<LemonadeStand[]>([]);
-  currentStandOptions = this.standOptionsSource.asObservable();
+  selectedStandOptions = this.standOptionsSource.asObservable();
 
   private totalPriceSource = new BehaviorSubject<number>(0);
   currentTotalPrice = this.totalPriceSource.asObservable();
 
+  updateCustomerName(name: string) {
+    this.customerNameSource.next(name);
+  }
+
+  updateCustomerPhoneNumber(phoneNumber: string) {
+    this.customerPhoneNumberSource.next(phoneNumber);
+  }
+
   updateSelectedStand(stand: LemonadeStand) {
-    this.standSource.next(stand);
+    this.selectedStandSource.next(stand);
   }
 
   updateStandOptions(stands: LemonadeStand[]) {

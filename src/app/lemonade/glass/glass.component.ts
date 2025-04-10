@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LiquidComponent } from './liquid/liquid.component';
 
 @Component({
@@ -7,14 +7,10 @@ import { LiquidComponent } from './liquid/liquid.component';
   styleUrls: ['./glass.component.css'],
   imports: [LiquidComponent],
 })
-export class GlassComponent implements OnInit {
+export class GlassComponent {
   @Input() percentLemonJuice: number = 0;
   @Input() percentWater: number = 0;
   @Input() percentSugar: number = 0;
   @Input() iceCubes: number = 0;
   @Input() classNames: string = '';
-
-  constructor() {}
-
-  ngOnInit() {}
 }

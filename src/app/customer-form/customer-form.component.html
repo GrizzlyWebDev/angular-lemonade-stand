@@ -18,7 +18,7 @@
         class="input-style"
         formControlName="selectedStand"
       >
-        <option [ngValue]="undefined">Select a lemonade stand</option>
+        <option [ngValue]="null" disabled>Select a lemonade stand</option>
         <option
           *ngFor="let lemonadeStand of lemonadeStands"
           [ngValue]="lemonadeStand"

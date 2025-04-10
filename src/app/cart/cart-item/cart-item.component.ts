@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GlassComponent } from '../../lemonade/glass/glass.component';
 import { CommonModule } from '@angular/common';
 @Component({
@@ -7,15 +7,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./cart-item.component.css'],
   imports: [GlassComponent, CommonModule],
 })
-export class CartItemComponent implements OnInit {
+export class CartItemComponent {
   @Input() lemonade: any;
   @Output() passLemonadeEvent = new EventEmitter<number>();
 
   passLemonadeId(id: number) {
     this.passLemonadeEvent.emit(id);
   }
-
-  constructor() {}
-
-  ngOnInit() {}
 }

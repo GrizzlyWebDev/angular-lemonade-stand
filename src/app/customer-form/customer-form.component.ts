@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,11 +10,7 @@ import { InputComponent } from './input/input.component';
 import { PhoneFormControl } from './phone-form-control';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CartService } from '../cart.service';
-
-interface LemonadeStand {
-  id: number;
-  name: string;
-}
+import LemonadeStand from '../interfaces/LemonadeStand';
 
 @Component({
   selector: 'app-customer-form',
@@ -22,7 +18,7 @@ interface LemonadeStand {
   templateUrl: './customer-form.component.html',
   styleUrls: ['./customer-form.component.css'],
 })
-export class CustomerFormComponent implements OnInit {
+export class CustomerFormComponent {
   constructor(private cartData: CartService, private router: Router) {}
   lemonadeStands: LemonadeStand[] = [
     { id: 1, name: 'Cooksys Lemonade Stand 1' },
@@ -48,6 +44,12 @@ export class CustomerFormComponent implements OnInit {
   });
 
   onSubmit() {
+    this.cartData.updateCustomerName(this.customerForm.controls['name'].value);
+
+    this.cartData.updateCustomerPhoneNumber(
+      this.customerForm.controls['phoneNumber'].value
+    );
+
     this.cartData.updateSelectedStand(
       this.customerForm.controls['selectedStand'].value
     );
@@ -56,6 +58,4 @@ export class CustomerFormComponent implements OnInit {
 
     this.router.navigateByUrl('/lemonade');
   }
-
-  ngOnInit() {}
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CardComponent } from './card/card.component';
 import { ProductComponent } from './product/product.component';
 import { CommonModule } from '@angular/common';
@@ -6,23 +6,10 @@ import { GlassComponent } from './glass/glass.component';
 import { CartComponent } from '../cart/cart.component';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
 import { CartService } from '../cart.service';
-
-interface Product {
-  name: string;
-  amount: number;
-  max: number;
-  price: number;
-  unit: string;
-}
-
-interface Lemonade {
-  id: number;
-  lemonJuice: number;
-  water: number;
-  sugar: number;
-  iceCubes: number;
-  price: number;
-}
+import LemonadeStand from '../interfaces/LemonadeStand';
+import Product from '../interfaces/Product';
+import Lemonade from '../interfaces/Lemonade';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lemonade',
@@ -37,8 +24,36 @@ interface Lemonade {
   templateUrl: './lemonade.component.html',
   styleUrl: './lemonade.component.css',
 })
-export class LemonadeComponent {
-  constructor(private cartService: CartService) {}
+export class LemonadeComponent implements OnInit {
+  constructor(private cartService: CartService, private router: Router) {}
+
+  customerName: string = '';
+
+  customerPhoneNumber: string = '';
+
+  selectedStand: LemonadeStand | undefined = undefined;
+
+  ngOnInit(): void {
+    this.cartService.customerName.subscribe(
+      (currentCustomerName) => (this.customerName = currentCustomerName)
+    );
+    this.cartService.customerPhoneNumber.subscribe(
+      (currentCustomerPhoneNumber) =>
+        (this.customerPhoneNumber = currentCustomerPhoneNumber)
+    );
+    this.cartService.selectedStand.subscribe(
+      (selectedStand) => (this.selectedStand = selectedStand)
+    );
+
+    if (
+      !this.customerName ||
+      !this.customerPhoneNumber ||
+      !this.selectedStand
+    ) {
+      this.router.navigateByUrl('/');
+    }
+  }
+
   products: Product[] = [
     {
       name: 'Lemon Juice',

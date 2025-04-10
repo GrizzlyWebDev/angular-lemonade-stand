@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -8,10 +8,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
 })
-export class InputComponent implements OnInit {
+export class InputComponent {
   @Input() control: FormControl = new FormControl();
   @Input() label: string = '';
-  constructor() {}
-
-  ngOnInit() {}
 }
