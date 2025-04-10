@@ -1,5 +1,8 @@
-<div class="container">
-  <div>
+<div class="container" *ngIf="lemonadeStands.length === 0; else elseBlock">
+  Loading...
+</div>
+<ng-template #elseBlock>
+  <div class="container">
     <h1>
       Hi there, before you can customize lemonades for your order we need some
       information about you.
@@ -48,4 +51,4 @@
       </button>
     </form>
   </div>
-</div>
+</ng-template>

@@ -1,5 +1,5 @@
 export default interface Lemonade {
-  id: number;
+  id?: number;
   lemonJuice: number;
   water: number;
   sugar: number;

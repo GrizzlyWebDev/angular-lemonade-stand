@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { InputComponent } from './input/input.component';
 import { PhoneFormControl } from './phone-form-control';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { CartService } from '../cart.service';
 import LemonadeStand from '../interfaces/LemonadeStand';
 
@@ -18,15 +18,8 @@ import LemonadeStand from '../interfaces/LemonadeStand';
   templateUrl: './customer-form.component.html',
   styleUrls: ['./customer-form.component.css'],
 })
-export class CustomerFormComponent {
-  constructor(private cartData: CartService, private router: Router) {}
-  lemonadeStands: LemonadeStand[] = [
-    { id: 1, name: 'Cooksys Lemonade Stand 1' },
-    { id: 2, name: 'Cooksys Lemonade Stand 2' },
-    { id: 3, name: 'Cooksys Lemonade Stand 3' },
-    { id: 4, name: 'Cooksys Lemonade Stand 4' },
-    { id: 5, name: 'Cooksys Lemonade Stand 5' },
-  ];
+export class CustomerFormComponent implements OnInit {
+  lemonadeStands: LemonadeStand[] = [];
 
   customerForm: FormGroup = new FormGroup({
     name: new FormControl<string>('', [
@@ -43,6 +36,17 @@ export class CustomerFormComponent {
     ]),
   });
 
+  constructor(private cartData: CartService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.cartData.loadLemonadeStands().subscribe((response) => {
+      this.cartData.updateStandOptions(response);
+    });
+    this.cartData.selectedStandOptions.subscribe(
+      (currentStandOptions) => (this.lemonadeStands = currentStandOptions)
+    );
+  }
+
   onSubmit() {
     this.cartData.updateCustomerName(this.customerForm.controls['name'].value);
 
@@ -53,8 +57,6 @@ export class CustomerFormComponent {
     this.cartData.updateSelectedStand(
       this.customerForm.controls['selectedStand'].value
     );
-
-    this.cartData.updateStandOptions(this.lemonadeStands);
 
     this.router.navigateByUrl('/lemonade');
   }

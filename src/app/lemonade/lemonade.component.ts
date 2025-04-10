@@ -25,7 +25,7 @@ import { Router } from '@angular/router';
   styleUrl: './lemonade.component.css',
 })
 export class LemonadeComponent implements OnInit {
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(private cartData: CartService, private router: Router) {}
 
   customerName: string = '';
 
@@ -34,14 +34,14 @@ export class LemonadeComponent implements OnInit {
   selectedStand: LemonadeStand | undefined = undefined;
 
   ngOnInit(): void {
-    this.cartService.customerName.subscribe(
+    this.cartData.customerName.subscribe(
       (currentCustomerName) => (this.customerName = currentCustomerName)
     );
-    this.cartService.customerPhoneNumber.subscribe(
+    this.cartData.customerPhoneNumber.subscribe(
       (currentCustomerPhoneNumber) =>
         (this.customerPhoneNumber = currentCustomerPhoneNumber)
     );
-    this.cartService.selectedStand.subscribe(
+    this.cartData.selectedStand.subscribe(
       (selectedStand) => (this.selectedStand = selectedStand)
     );
 
@@ -190,8 +190,8 @@ export class LemonadeComponent implements OnInit {
     this.cartLemonades.length > 0
       ? this.cartLemonades.forEach((lemonade) => {
           this.totalPrice += lemonade.price;
-          this.cartService.updateTotalPrice(this.totalPrice);
+          this.cartData.updateTotalPrice(this.totalPrice);
         })
-      : this.cartService.updateTotalPrice(0);
+      : this.cartData.updateTotalPrice(0);
   }
 }

@@ -13,7 +13,7 @@ import LemonadeStand from '../interfaces/LemonadeStand';
 export class CheckoutComponent implements OnInit {
   totalPrice: number = 0;
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(private cartData: CartService, private router: Router) {}
 
   customerName: string = '';
 
@@ -22,20 +22,20 @@ export class CheckoutComponent implements OnInit {
   selectedStand: LemonadeStand | undefined = undefined;
 
   ngOnInit() {
-    this.cartService.customerName.subscribe(
+    this.cartData.customerName.subscribe(
       (currentCustomerName) => (this.customerName = currentCustomerName)
     );
 
-    this.cartService.customerPhoneNumber.subscribe(
+    this.cartData.customerPhoneNumber.subscribe(
       (currentCustomerPhoneNumber) =>
         (this.customerPhoneNumber = currentCustomerPhoneNumber)
     );
 
-    this.cartService.selectedStand.subscribe(
+    this.cartData.selectedStand.subscribe(
       (selectedStand) => (this.selectedStand = selectedStand)
     );
 
-    this.cartService.currentTotalPrice.subscribe(
+    this.cartData.currentTotalPrice.subscribe(
       (currentTotalPrice) => (this.totalPrice = currentTotalPrice)
     );
 
