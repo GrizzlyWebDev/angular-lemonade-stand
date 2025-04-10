@@ -66,3 +66,8 @@ app-cart-item {
 .background {
   margin: 20px 5px;
 }
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

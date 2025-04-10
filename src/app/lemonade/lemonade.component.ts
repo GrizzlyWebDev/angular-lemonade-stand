@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { GlassComponent } from './glass/glass.component';
 import { CartComponent } from '../cart/cart.component';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
+import { CartService } from '../cart.service';
 
 interface Product {
   name: string;
@@ -37,6 +38,7 @@ interface Lemonade {
   styleUrl: './lemonade.component.css',
 })
 export class LemonadeComponent {
+  constructor(private cartService: CartService) {}
   products: Product[] = [
     {
       name: 'Lemon Juice',
@@ -80,6 +82,8 @@ export class LemonadeComponent {
   };
 
   cartIdCount = 0;
+
+  totalPrice: number = 0;
 
   increment(productName: string) {
     LemonadeComponent.bind(this);
@@ -168,5 +172,11 @@ export class LemonadeComponent {
       (lemonade) => lemonade.id === id
     );
     itemIdx > -1 ? this.cartLemonades.splice(itemIdx, 1) : null;
+    this.cartLemonades.length > 0
+      ? this.cartLemonades.forEach((lemonade) => {
+          this.totalPrice += lemonade.price;
+          this.cartService.updateTotalPrice(this.totalPrice);
+        })
+      : this.cartService.updateTotalPrice(0);
   }
 }
